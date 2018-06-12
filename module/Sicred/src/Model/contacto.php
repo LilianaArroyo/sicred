@@ -24,11 +24,10 @@ class contacto{
         $mail->Host = 'smtp.live.com';
         $mail->Port = 587;
         /* 
-          Usuario: contactocredenciales@bachilleres.edu.mx 
-          Contrase�a: SiCredCB01
+          
         */
         $mail->Username = 'contactocredenciales@bachilleres.edu.mx';
-        $mail->Password = 'sicredCB01';
+        $mail->Password = '*******';
         $mail->SMTPSecure = 'tls';
         $mail->SMTPAuth = true;
 
@@ -60,7 +59,7 @@ class contacto{
         $mail->Host = 'smtp.live.com';
         $mail->Port = 587;
         $mail->Username = 'contactocredenciales@bachilleres.edu.mx';
-        $mail->Password = 'sicredCB01';
+        $mail->Password = '******';
         $mail->SMTPSecure = 'tls';
         $mail->SMTPAuth = true;
 
