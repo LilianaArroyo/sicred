@@ -45,12 +45,7 @@
                                 <td rowspan="3">
                                            <?php
                                         if($resultado["img"] == ""){
-                                            $foto = $resultado["matricula"].".jpg";
-                                                    $file = "/mnt/Fotos/FOTOS/".$fot;
-                                                    $gestor = fopen($file,"r");
-                                                    $img = fread($gestor,filesize($file));
-                                                    $imdata = base64_encode($img);
-                                                    $foto = "data:image/jpg;base64,".$imdata;
+                                            $foto = $this->basePath('img/noimagen.jpg');
                                         }else{
                                             $imdata = base64_encode($resultado["img"]);
                                             $foto = "data:image/jpg;base64,".$imdata;
