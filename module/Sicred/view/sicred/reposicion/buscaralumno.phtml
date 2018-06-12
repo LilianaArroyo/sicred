@@ -1,0 +1,177 @@
+<?php 
+    $title = 'REVISI&Oacute;N DE CREDENCIALES';
+    $this->headTitle($title);
+    $size = count($resultado);
+    
+    if($resultado["validation"] == ''){
+        $estilo = "";
+        $val = 'NO SE HA VALIDADO LA MATR&Iacute;CULA';
+        $validacion = ["estilo"=>$estilo, "val"=>$val];
+    }else{
+        $estilo = "color:red";
+        $val = 'Validada el '.$resultado["validation"];
+        $validacion = ["estilo"=>$estilo, "val"=>$val];
+    }
+    
+    if($resultado["estatus"] == 1 || $resultado["estatus"] == 2 || $resultado["estatus"] == 3 || $resultado["estatus"] == 4){
+        $impresa = "IMPRESA EL ".$resultado["impresion"];
+    }else{
+        $impresa = "NO SE HA IMPRESO LA CREDENCIAL";
+    }
+
+    if ($resultado["estatus"] == 4) {
+        $entregada = "ENTREGADA EL D&Iacute;A ".$resultado["fch_entrega"];
+    }else{
+        $entregada = "NO SE HA ENTREGADO LA CREDENCIAL";   
+    }
+?>
+
+<div class="col-xs-12 col-sm-6 col-md-10 sidenav_cont">      
+    <div class="conteiner form_serch" style="<?= $height ?>">
+
+        <h4 class="text-center" style="margin-bottom: -15px">REPOSICI&Oacute;N DE CREDENCIALES</h4>
+        <h1 class="text-center">REVISI&Oacute;N DE CREDENCIALES</h1><br>
+        <div class="row" style="width: 100%;">
+            <div class="row">
+                <div class="row">
+                    <form name="serch-form" id="serch-form" action="<?= $this->url("reposicion", ['action'=>'buscaralumno']); ?>" method="post"  style="margin-left: 5%; width: 35%">
+                        <input id="status" name="status" type="text" value="1" hidden>
+                        <input id="beforemat" name="beforemat" type="text" value="<?= $resultado["matricula"] ?>" hidden>
+                        <p id="msg_err" style="display: none;font-size: 14pt;font-style: italic; font-weight: bold;">Por favor ingrese la matr&iacute;cula que aparece impresa en la credencial</p>
+                        <span>Ingresa la matr&iacute;cula del alumno:</span><br>
+                        <div class="input-group">
+                            <?php if($css["stts"] == 2){ ?>
+                                <input name="serch" id="serch" type="text" class="form-control" placeholder="Buscar matr&iacute;cula..." minlength="9" maxlength="9" required style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" value="" autocomplete="off" autofocus disabled>
+                            <?php }else{ ?>
+                                <input name="serch" id="serch" type="text" class="form-control" placeholder="Buscar matr&iacute;cula..." minlength="9" maxlength="9" required style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" value="" autocomplete="off" autofocus>
+                           <?php } ?>
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="submit" id="serch-btn"><i class="glyphicon glyphicon-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div id="form_report_cred" class="row checkbox" style="width: 36%; margin-left: 4%; <?= $css["sty"]?>">
+                    <form action="<?= $this->url("reposicion", ['action'=>'reporterror']); ?>" method="post">
+                        <input id="report_mat" name="report_mat" type="text" value="<?= $resultado["matricula"] ?>" hidden>
+                        <input id="report_fecha" name="report_fecha" type="text" value="<?= $resultado["fecha_solictud"] ?>" hidden>
+                        <span style="font-weight: bold; font-size: 16px">Escriba el error detectado en la impresi&oacute;n</span>
+                        <textarea class="form-control" id="report_obs" name="report_obs" placeholder="" rows="2" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" required autofocus></textarea>
+                        <button class="btn btn-default" type="submit" id="btn_enviar_error" name="btn_enviar_error" style="margin-top:2%" >Rechazar solicitud de Reposici&oacute;n</button>
+                    </form>
+                </div>
+            </div>
+            <?php if($css["stts"] == 1){ ?>
+                <div class="col-md-10 checkbox" style="margin-left: 2%">
+                    <label style="font-weight: bold"><input type="checkbox" value="3">Datos de impresi&oacute;n incorrectos</label>
+                </div>
+            <?php } ?>
+        </div>
+
+        <?php if($band == 2){ ?>
+        <div class="row">
+                <div class="row">
+                    <?php if($resultado["matricula"] != null){  ?>
+                          <div id="inter" class="text-center">
+                              <h3 style="font-style: italic;color: #00645d;margin: 0;">Faltan <b><?= $inter["faltan"] ?></b> de <b><?= $inter["total"] ?></b> credenciales por revisar</h3>
+                          </div>
+                        <table class="table table-bordered text-right raised marca_agua">
+                            <tbody>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td class="text-center">
+                                        <img src="<?= $this->basePath('img/logo_cb2.png')?>" class="img-responsive" id="logo">
+                                    </td>
+                                    <td>
+                                        <b><p class="text-center" style="font-size:18px;margin-top:25px;"><?= $resultado["modalidad"] ?></p></b>
+                                        <b>&nbsp;<p class="text-center" style="font-size:18px;color: red;"><?= $resultado["turno"] ?></p></b>
+                                    </td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td style="height: 65px"><h3 class="cred"><b><?= $resultado["nombre"] ?></b></h3>
+                                        <h3 class="cred"><b><?= $resultado["apellidos"] ?></b></h3>
+                                    </td>
+                                    <td rowspan="3">
+                                        <?php
+                                                if($resultado["img"] == ""){
+                                                    $fot = $resultado["matricula"].".jpg";
+                                                    $file = "/mnt/Fotos/FOTOS/".$fot;
+                                                    $gestor = fopen($file,"r");
+                                                    $img = fread($gestor,filesize($file));
+                                                    $imdata = base64_encode($img);
+                                                    $foto = "data:image/jpg;base64,".$imdata;
+                                                    
+                                                    //$foto = $this->basePath('img/noimagen.jpg');
+                                                }else{
+                                                    $imdata = base64_encode($resultado["img"]);
+                                                    $foto = "data:image/jpg;base64,".$imdata;
+                                                }
+                                            ?>
+                                         <img src="<?= $foto ?>" id="foto_std" style=" align-content: left;border: 2px solid #00a89c;border-radius: 5px;padding: 5px; ">
+                                    </td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td style="height: 65px"><h3 class="cred"><p style="font-size: 12px">MATRICULA</p><b><?= $resultado["matricula"] ?></b></h3></td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td style="height: 65px"><h3 class="cred"><p style="font-size: 12px">CURP</p><b><?= $resultado["curp"] ?></b></h3></td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td style="height: 65px">
+                                        <h4 class="cred"><p style="font-size: 12px">CORREO</p><b><?= $resultado["correo"] ?></b></h4>
+                                    </td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td rowspan="2"class="text-center">
+                                        <img src="<?= $this->basePath('iconos/logoplantel_'.$resultado["plantel"].'.png')?>" class="img-responsive" id="logo">
+                                    </td>
+                                    
+                                    <td style="height: 65px"><h5 class="text-center" style="margin-top: 30%"><b><?= $impresa ?></b></h5></td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <h4 id="status" name="status" style="<?= $validacion["estilo"] ?>;margin-left: 20%;">Estado: <b><?= $validacion["val"] ?></b></h4>
+                        <h4 id="status" name="status" style="margin-left: 20%;font-weight: bold;">Fecha de Solicitud: <?= $resultado["fecha_solictud"] ?> <b></b></h4>
+
+                    <?php }else{ ?>
+                        <div style="width: 100%; margin-top:5%;" class="text-center">
+                            <h3 style="font-style: italic;color: #00645d;font-weight: bold" class="text-center">La matr&iacute;cula <strong><?= $data["serch"] ?></strong> no fue encontrada! Por favor verifique que los datos sean correctos.</h3>
+                        </div>
+                    <?php } ?>
+                </div>  
+        </div>
+        
+        <?php } ?>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    function muestra_oculta(id){
+    
+        if (document.getElementById){ //se obtiene el id
+            var el = document.getElementById(id); //se define la variable "el" igual a nuestro div
+            el.style.display = (el.style.display == 'none') ? 'block' : 'none'; //damos un atributo display:none que oculta el div
+        }
+    }
+</script>
+

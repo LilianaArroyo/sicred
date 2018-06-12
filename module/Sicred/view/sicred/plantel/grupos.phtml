@@ -1,0 +1,66 @@
+<?php 
+    //session_start();
+
+    $titulo = 'GRUPOS';
+    $this->headTitle($titulo);
+?>
+
+<div class="col-xs-12 col-sm-6 col-md-10 sidenav_cont">
+    <div class="container form_sech" style="margin-top: 2%">
+
+        <h1 style="margin-left: 15%;">ALUMNOS INSCRITOS AL PER&Iacute;ODO 2017B</h1><br>
+        <div class="row" style="width: 100%; <?= $css ?>">
+            <form name="grupos-form" id="grupos-form" action="<?= $this->url.'/plantel/grupos'?>" method="post" class="form-inline" style="width: 100%;margin: 0 0 3% 12%">
+                <?php if($_SESSION['perfil'] == 1){ ?>
+                    <div class="form-group" style="width: 30%; height: 10%;">
+                        <label class="control-label" for="date">Plantel:</label>
+                        <select id="plantel" name="plantel" class="form-control"  onchange="">
+                            <option id="selection" value="">Seleccione un plantel</option>
+                            <?php if($fecha == ""){ ?>
+                                <?php for ($i=1; $i<=20;$i++) { ?>
+                                    <option id="<?= $i ?>" value="<?= $i ?>" > <?= $i ?> </option>
+                                <?php } ?>
+                            <?php }else{
+                                foreach($plantel as $plt){ ?>
+                                    <option id="<?= $plt ?>" value="<?= $plt ?>" > <?= $plt ?> </option> 
+                                <?php }//FIN FOREACH ?>
+                            <?php }//FIN IF-ELSE ?>
+                        </select>
+                    </div>
+                <?php } ?>
+                <div class="form-group" style="width: 30%; height: 10%">
+                    <label class="control-label" for="grupo">Grupo*:</label>
+                    <input class="form-control input-sm" type="text" id="grupo" name="grupo" placeholder="Grupo">
+                </div>
+                <button class="btn btn-default btn-md" type="submit" id="serch-btn"> Buscar Grupo </button>
+                
+            </form>
+        </div>
+
+        <!-- RESULTADO -->
+        <?php if($band == 2){ ?>
+            <div class="row">
+                <table class="table table-striped" style="width: 85%">
+                        <thead>
+                            <tr>
+                                <td>MATRICULA</td>
+                                <td>NOMBRE</td>
+                                <td>CORREO INSTITUCIONAL</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php $id= 1; ?>
+                        <?php foreach ($lista as $alum){ ?>
+                            <td><?= $alum[0] ?></td>
+                            <td><?= $alum[1]." ".$alum[2]." ".$alum[3] ?></td>
+                            <td><?= $alum[4] ?></td>
+
+                            <?php $id++;
+                        } ?>
+                        </tbody>
+                </table>  
+            </div>
+        <?php } ?>
+
+    </div>
+</div>

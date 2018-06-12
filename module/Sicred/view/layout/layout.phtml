@@ -1,0 +1,284 @@
+<?= $this->doctype() ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link href="https://fonts.googleapis.com/css?family=Assistant" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+        <script src="<?= $this->basePath('js/jquery-latest.js')?>"></script>
+        <?= $this->headTitle('SiCred')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?= $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- styles -->
+        <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/bachilleres.png'])
+            ->prependStylesheet($this->basePath('css/style.css'))
+            ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
+            ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+            ->prependStylesheet($this->basePath('css/bootstrap-datetimepicker.min.css'))
+            ->prependStylesheet($this->basePath('css/normalize.css'))
+            ->prependStylesheet($this->basePath('css/demo.css'))
+            ->prependStylesheet($this->basePath('css/component.css'))
+            ->prependStylesheet($this->basePath('dist/css/bootstrap-submenu.min.css'))
+            ->prependStylesheet($this->basePath('css/animate.min.css'))
+            ->prependStylesheet($this->basePath('css/bootstrap-dropdownhover.min.css'))
+
+        ?>
+
+        <!-- Scripts -->
+        <?= $this->headScript()
+            ->prependFile($this->basePath('js/bootstrap.min.js'))
+            ->prependFile($this->basePath('js/bootstrap-datetimepicker.min.js'))
+            ->prependFile($this->basePath('js/bootstrap-datetimepicker.es.js'))
+            ->prependFile($this->basePath('js/moment.min.js'))
+            ->prependFile($this->basePath('js/custom-file-input.js'))
+            ->prependFile($this->basePath('dist/js/bootstrap-submenu.min.js'))
+            ->prependFile($this->basePath('js/bootstrap-dropdownhover.min.js'))
+        ?>
+
+    </head>
+    <body>
+        <?php
+            $sesion = !empty($_SESSION);
+            $fecha_actual = strtotime(date("d-m-Y H:i:00", time()));
+            $fecha_proceso = strtotime("08-09-2018 23:59:00");
+        ?>
+        <div class="container" id="header" name="header">
+            <div class="jumbotron" style="height: inherit">
+                <div id="div_titulo" class="col-sm-6">
+                    <img src="<?= $this->basePath('img/logo_sicred.png')?>" class="img-responsive" id="logo_sicred">
+                </div>
+                <div id="div_icon" class="col-sm-6">
+                    <div class="row" style="height: inherit">
+                        <div class="col-md-6" id="div_logosep">
+                            <img src="<?= $this->basePath('img/SEP_horizontal.png')?>" class="img-responsive" id="logo_sep" style="width: auto; height: 102%; margin-left: 0">
+                        </div>
+                        <div class="col-md-6" id="div_logobach">
+                            <img src="<?= $this->basePath('img/logo_colegio.png')?>" class="img-responsive" id="logo_bach">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <nav id="navbar" class="navbar navbar-inverse">
+                <?php if($sesion){?>
+                <!-- div para el punto de ruptura -->
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        
+                    </div>
+                </div>
+                
+                <div class="collapse navbar-collapse" id="menu" data-hover="dropdown" data-animation="fadeIn fadeIn fadeIn fadeIn">
+                    <ul class="nav navbar-nav">
+                    
+                            <li><a href="<?= $this->basePath('sicred/index'); ?>">Inicio</a></li>
+                            <?php if($_SESSION['mn_primerIngr'] != null || $_SESSION['mn_rep'] != null){ ?>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" data-submenu href="#">Credenciales <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <?php if(($a = $_SESSION['mn_primerIngr']) != null){
+                                                    if($fecha_actual <= $fecha_proceso){ ?>
+                                        <li class="dropdown-submenu dropdown">
+                                            <a class="test" data-toggle="dropdown" tabindex="0" href="#">Proceso de Primer Ingreso</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="<?= $this->basePath($a[0]); ?>">Revisi&oacute;n de Credenciales</a></li>
+                                                <li><a href="<?= $this->basePath($a[1]); ?>">Grupos</a></li>
+                                                <li><a href="<?= $this->url("primeringreso", ['action'=>'resumen']); ?>">Resumen</a></li>
+                                            </ul>
+                                        </li>            
+
+                                        
+                                        <!--li class="dropdown-submenu">
+                                            <a class="test" data-toggle="dropdown" tabindex="0" href="#">Proceso de Primer Ingreso</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="<?= $this->url("primeringreso", ['action'=>'revisioncred']); ?>">Revisi&oacute;n de Credenciales</a></li>
+                                                <li><a href="<?= $this->url("primeringreso", ['action'=>'listas']); ?>">Grupos</a></li>
+                                                <li><a href="<?= $this->url("primeringreso", ['action'=>'resumen']); ?>">Resumen</a></li>
+                                            </ul>
+                                        </li-->
+
+                                        <?php }}
+                                         if(($a = $_SESSION['mn_rep']) != null){ ?>
+                                            <li class="dropdown-submenu dropdown">
+                                                <a class="test" data-toggle="dropdown" tabindex="0" href="#">Reposici&oacute;n de Credenciales</a>
+                                                <ul class="dropdown-menu">
+                                                    <?php if($_SESSION['perfil'] == 'SUPERUSUARIO' || $_SESSION['perfil'] == 'CARGA_SOLICITUDES'){ ?>
+                                                        <li><a href="<?= $this->basePath($a[0]); ?>">Cargar Solicitudes</a></li>
+                                                        <li><a href="<?= $this->basePath($a[1]); ?>">Revisi&oacute;n de Credenciales</a></li>
+                                                        <li><a href="<?= $this->basePath($a[2]); ?>">Solicitud de Reposici&oacute;n de Credenciales</a></li>
+                                                    <?php }else{ ?>
+                                                        <li><a href="<?= $this->basePath($a[0]); ?>">Revisi&oacute;n de Credenciales</a></li>
+                                                        <li><a href="<?= $this->basePath($a[1]); ?>">Solicitud de Reposici&oacute;n de Credenciales</a></li>
+                                                    <?php } ?>
+                                                </ul>
+                                            </li>                                        
+
+                                        <!--li class="dropdown-submenu">
+                                            <a class="test" data-toggle="dropdown" tabindex="0" href="#">Reposici&oacute;n de Credenciales</a>
+                                            <ul class="dropdown-menu">
+                                                <?php if($_SESSION['perfil'] == 'SUPERUSUARIO' || $_SESSION['perfil'] == 'CARGA_SOLICITUDES'){ ?>
+                                                    <li><a href="<?= $this->url("reposicion", ['action'=>'cargarsolicitud']); ?>">Cargar Solicitudes</a></li>
+                                                <?php } ?>
+                                                <li><a href="<?= $this->url("reposicion", ['action'=>'revisioncred']); ?>">Revisi&oacute;n de Credenciales</a></li>
+                                                <li><a href="<?= $this->url("reposicion", ['action'=>'reposiciones']); ?>">Solicitud de Reposici&oacute;n de Credenciales</a></li>
+                                            </ul>
+                                        </li-->
+
+                                        <?php } ?>
+                                    </ul>
+                                </li>
+                            <?php } ?>
+                            <?php if(($a = $_SESSION['mn_plantel']) != null ){ ?>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" data-submenu href="#">Alumnos<span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown-submenu dropdown">
+                                            <a class="test" data-toggle="dropdown" tabindex="0" href="#">Buscar...</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="<?= $this->basePath($a[0]); ?>"> Por Matr&iacute;cula  </a></li>
+                                                <li><a href="<?= $this->basePath($a[1]); ?>"> Por Nombre</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <!--li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" data-submenu href="#">Alumnos<span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown-submenu">
+                                            <a class="test" data-toggle="dropdown" tabindex="0" href="#">Buscar...</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="<?= $this->url("plantel", ['action'=>'buscaralumno']); ?>"> Por Matr&iacute;cula  </a></li>
+                                                <li><a href="<?= $this->url("plantel", ['action'=>'buscaralumnonombre']); ?>"> Por Nombre</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li-->
+                            <?php } ?>
+                            <li><a href="<?= $this->basePath('sicred/contacto'); ?>">Contacto</a></li>
+                        <?php }?>
+                    </ul>
+                    <?php if($sesion){ ?>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?= $_SESSION['nombre']." ".$_SESSION['apat']." ".$_SESSION['amat'] ?> <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/sicred/logout"><span class="glyphicon glyphicon-log-out"></span> <b>Salir</b></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    <?php } ?>
+
+                </div>
+            </nav>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+               <?= $this->content ?>
+            </div>
+        </div>
+        <footer id="footer" class="container-fluid text-center" style="margin-top:6%">
+            <p style="font-size: 16px"><b>Prolongaci&oacute;n Rancho Vista Hermosa No. 105 Col. Los Girasoles C.P. 04920 Coyoac&aacute;n CDMX, <u>Tel. 5624-4100</u></b></p>
+        </footer>
+
+        <?=$this->inlineScript() ?>
+
+        <script type="text/javascript">
+            $(document).ready(main);
+            var contador = 1;
+            function main() {
+                $('menu_bar').click(function () {
+                    if (contador == 1){
+                        $('nav').animate({ left:'0' });
+                        contador = 0;
+                    }else{
+                        contador = 1;
+                        $('nav').animate({ left: '-100%'});
+                    }
+                });
+
+                //mostramos y ocultams submenus
+                $('.submenu').click(function () {
+                    $(this).children('.children').slideToggle();
+                });
+            }
+        
+            //detectar caracteres invalidos
+            $(document).ready(function () {
+                $("#serch").on('keypress', function (tecla) {
+                    if((tecla.charCode < 48 || tecla.charCode > 57) && (tecla.charCode < 97 || tecla.charCode >122) && (tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode != 13)){
+                        alert("Caracter no v�lido");
+                        return false;
+                    }
+                });
+            });
+            $(document).ready(function () {
+                $("#reporte").is(function () {
+
+                    $("#radio").show();
+                })
+            });
+            $(document).ready(function () {
+                $("input[type=checkbox]").on('click', function(){
+                    $("#msg_err").show();
+                    $("#status").attr("value","2");
+                })
+            });
+            $(document).ready(function(){
+              $('#date').datetimepicker({
+                format: 'DD/MM/YYYY'
+              });
+              $('#date').data("DateTimePicker");
+            });
+            $(document).ready(function () {
+                $("td.day").click(function () {
+                    $("div.bootstrap-datetimepicker-widget").css("display", "none");
+                })
+            });
+
+            $('[data-submenu]').submenupicker();
+            
+            $('[checked="checked"]').parent().addClass("active");
+
+            $("td.day").click(function () {
+                $("div.bootstrap-datetimepicker-widget").css("display", "none");
+            });
+
+            ;(function (document, window, index)
+			{
+				var inputs = document.querySelectorAll('.inputfile');
+				Array.prototype.forEach.call( inputs, function( input ){
+					var label	 = input.nextElementSibling,
+						labelVal = label.innerHTML;
+
+					input.addEventListener( 'change', function( e ){
+						var fileName = '';
+						if( this.files && this.files.length > 1 )
+							fileName = ( this.getAttribute( 'data-multiple-caption' ) || '' ).replace( '{count}', this.files.length );
+						else
+							fileName = e.target.value.split( '\\' ).pop();
+
+						if( fileName )
+							label.querySelector( 'span' ).innerHTML = fileName;
+						else
+							label.innerHTML = labelVal;
+					});
+
+					// Firefox bug fix
+					input.addEventListener( 'focus', function(){ input.classList.add( 'has-focus' ); });
+					input.addEventListener( 'blur', function(){ input.classList.remove( 'has-focus' ); });
+				});
+			}(document, window, 0));
+        </script>
+    </body>
+</html>

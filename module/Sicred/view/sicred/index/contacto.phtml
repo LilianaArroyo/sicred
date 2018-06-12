@@ -1,0 +1,41 @@
+<?php
+    $title = 'CONTACTO';
+    $this->headTitle($title);
+?>
+
+<div id="contacto" name="contacto" class="col-xs-12 col-sm-6 col-md-10 sidenav_cont">
+    <div class="conteiner form_serch contact" style="">
+        <h2 class="text-center contact" style="">ESCR&Iacute;BENOS</h2>
+        <div class="row">
+            <div class="col-sm-4" style="margin-top:1%">
+                <p style="font-size: 16px;font-weight: bold">CONT&Aacute;CTANOS </p>
+                <p style="font-size: 16px"><span class="glyphicon glyphicon-phone"></span>&nbsp;&nbsp;5624-4100 ext. 4243</p>
+                <p style="font-size: 16px"><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;contactocredenciales@bachilleres.edu.mx</p>
+            </div>
+            <div class="col-sm-7">
+                      <?php if($band == 2){ ?>
+                             <div style="width: 100%;" class="text-center">
+                                <h3 style="font-style: italic; color: #00645d; font-weight: bold" class="text-center"> <strong><?= $resultado ?></strong></h3>
+                            </div> 
+                      <?php } ?>
+                    <form name="coment-form" id="coment-form" action="<?= $this->url("sicred", ['action'=>'contacto']); ?>" method="post" style="margin-left: 5%">
+                            <div class="row">
+                                <div class="col-sm-6 form-group">
+                                    <input class="form-control" id="nombre" name="nombre" placeholder="NOMBRE" type="text" value="<?=$_SESSION['nombre']." ".$_SESSION['apat']." ".$_SESSION['amat'] ?>" readonly="readonly" style="font-weight: bold">
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <input class="form-control" id="email" name="email" placeholder="usuario@bachilleres.edu.mx" type="email" required>
+                                </div>
+                            </div>
+                            <input class="form-control" id="asunto" name="asunto" placeholder="ASUNTO" type="text" required><br>
+                            <textarea class="form-control" id="comentario" name="comentario" placeholder="COMENTARIO" rows="5" required></textarea><br>
+                            <div class="row">
+                                <div class="col-sm-12 form-group">
+                                    <button class="btn btn-default pull-right contact" type="submit">Enviar</button>
+                                </div>
+                            </div>
+                    </form>      
+            </div>
+        </div>
+    </div>
+</div>

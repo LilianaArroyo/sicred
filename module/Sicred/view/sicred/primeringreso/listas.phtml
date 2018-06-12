@@ -1,0 +1,133 @@
+<?php
+    $title = 'PRIMER INGRESO';
+    $this->headTitle($title);
+    $periodo= '2017B';
+?>
+        
+<div class="col-xs-12 col-sm-6 col-md-10 sidenav_cont">      
+    <div class="conteiner form_serch" style="<?=  $css ?>">
+
+        <h1 class="text-center" style="margin:0 0 4% 0">ALUMNOS DE PRIMER INGRESO INSCRITOS AL PER&Iacute;ODO <?= $_SESSION['periodo'] ?></h1><br>
+        <div class="row" style="width: 100%;">
+            <form name="ordenar-form" id="ordenar-form" action="<?= $this->url("primeringreso", ['action'=>'listas']); ?>" method="post" class="form-inline" style="width: 100%; margin:0 0 3% 12%">
+                    
+                    <div class="form-group" style="width: 30%; height: auto; margin-top: -1.3%">
+                        <label class="control-label" style="font-size:16px;">Plantel: </label>
+                        <select id="plantel" name="plantel" class="form-control" style="font-size:18px;" onchange="">
+                            <option id="selection" value="">Seleccione un plantel</option>
+                            <?php for ($i=1; $i<=20;$i++) {
+                                if($band == 2){
+                                    if ($i === (int)($data->plantel)) {?>
+                                        <option id="<?= $i ?>" value="<?= $i ?>" selected> <?= $i ?> </option>
+                                    <?php }else{ ?>
+                                        <option id="<?= $i ?>" value="<?= $i ?>" > <?= $i ?> </option>
+                                    <?php } ?>
+                                <?php }else{ ?>
+                                    <option id="<?= $i ?>" value="<?= $i ?>" > <?= $i ?> </option>
+                                <?php } ?>
+                            <?php }?>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="width: 30%; height: auto;margin-top: -1.3%">
+                        <label class="control-label" style="font-size:16px;">Grupo: </label>
+                        <div class="form-group">
+                            <input class="form-control input-sm" type="text" id="grupo" name="grupo" placeholder="Grupo" style="width: 173px;font-size:18px;">
+                        </div>
+                    </div>
+
+                <button class="btn btn-default btn-md" type="submit" id="serch-btn" style="margin-top: -1.3%;width:173px"> Consultar </button>
+            </form>
+        </div>
+
+        <?php if($band == 2){ ?>
+        <div class="row">
+            <table class="table table-striped text-center" style="width: 85%">
+                <!-- los datos van ordenados por fecha, plantel,nombre asc-->
+                <thead>
+                        <tr>
+                            <td><b>ID</b></td>
+                            <td><b>MATRICULA</b></td>
+                            <td class="text-center"><b>ID IMPRESI&Oacute;N</b></td>
+                            <td><b>NOMBRE</b></td>
+                            <td><b>GRUPO</b></td>
+                            <td><b>FECHA DE IMPRESI&Oacute;N</b></td>
+                            <td><b>FECHA DE REVISI&Oacute;N</b></td>
+                            <td><b>FECHA DE ENTREGA</b></td>
+                            <td><b>ESTATUS</b></td>
+                        </tr>
+                </thead>
+                <tbody>
+                    <?php $id= 1; ?>
+                        <?php foreach ($lista as $alum){
+                            if ($alum[5]==null){?>
+                                <tr>
+                                    <td><?= $id ?></td>
+                                    <td><?= $alum[0] ?></td>
+                                    <td class="text-center"><p style="color:red"><?= $alum[7] ?></p></td>
+                                    <td class="text-left"><p style="color:red"><?= $alum[1]." ".$alum[2]." ".$alum[3] ?></p></td>
+                                    <td><?= $alum[4] ?></td>
+                                    <td><?= $alum[5] ?></td>
+                                    <td><?= $alum[6] ?></td>
+                                    <td><?= $alum[9] ?></td>
+                                    <td><p style="color:red">Impresi&oacute;n pendiente</p></td>
+                                </tr>
+                            <?php }elseif($alum[6]==null){ ?>
+                                <tr>
+                                    <td><?= $id ?></td>
+                                    <td><?= $alum[0] ?></td>
+                                    <td class="text-center"><p style="color:green"><?= $alum[7] ?></p></td>
+                                    <td class="text-left"><p style="color:green"><?= $alum[1]." ".$alum[2]." ".$alum[3] ?></p></td>
+                                    <td><?= $alum[4] ?></td>
+                                    <td><?= $alum[5] ?></td>
+                                    <td><?= $alum[6] ?></td>
+                                    <td><?= $alum[9] ?></td>
+                                    <td><p style="color:green">Revisi&oacute;n pendiente</p></td>
+                                </tr>
+                           <?php }elseif($alum[8]==3){ ?>
+                                <tr>
+                                    <td><?= $id ?></td>
+                                    <td><?= $alum[0] ?></td>
+                                    <td class="text-center"><p style="color:red"><?= $alum[7] ?></p></td>
+                                    <td class="text-left"><p style="color:red"><?= $alum[1]." ".$alum[2]." ".$alum[3] ?></p></td>
+                                    <td><?= $alum[4] ?></td>
+                                    <td><?= $alum[5] ?></td>
+                                    <td><?= $alum[6] ?></td>
+                                    <td><?= $alum[9] ?></td>
+                                    <td><p style="color:red">Reimpresi&oacute;n pendiente</p></td>
+                                </tr>
+                            <?php }elseif($alum[9]==null){ ?>
+                                <tr>
+                                    <td><?= $id ?></td>
+                                    <td><?= $alum[0] ?></td>
+                                    <td class="text-center"><p style="color:blue"><?= $alum[7] ?></p></td>
+                                    <td class="text-left"><p style="color:blue"><?= $alum[1]." ".$alum[2]." ".$alum[3] ?></p></td>
+                                    <td><?= $alum[4] ?></td>
+                                    <td><?= $alum[5] ?></td>
+                                    <td><?= $alum[6] ?></td>
+                                    <td><?= $alum[9] ?></td>
+                                    <td><p style="color:blue">Entrega pendiente</p></td>
+                                </tr>
+                           <?php }else{?>
+                                <tr>
+                                    <td><?= $id ?></td>
+                                    <td><?= $alum[0] ?></td>
+                                    <td class="text-center"><?= $alum[7] ?></td>
+                                    <td class="text-left"><?= $alum[1]." ".$alum[2]." ".$alum[3] ?></td>
+                                    <td><?= $alum[4] ?></td>
+                                    <td><?= $alum[5] ?></td>
+                                    <td><?= $alum[6] ?></td>
+                                    <td><?= $alum[9] ?></td>
+                                    <td>Impresa, revisada y entregada</td>
+                                </tr>
+                            <?php }?>
+                            <?php $id++;
+                         }?>
+                </tbody>
+            </table>
+        </div>
+        <?php }?>
+          
+
+    </div>
+</div>

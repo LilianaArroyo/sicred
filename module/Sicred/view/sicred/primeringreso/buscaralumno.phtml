@@ -1,0 +1,138 @@
+<?php
+    $title = 'REVISI&Oacute;N DE CREDENCIALES';
+    $this->headTitle($title);
+    
+    $size = count($resultado);
+    if($resultado["validation"] == ''){
+        $estilo = "";
+        $val = 'No se ha validado la matr&iacute;cula';
+        $validacion = ["estilo"=>$estilo, "val"=>$val];
+    }else{
+        $estilo = "color:red";
+        $val = 'Revisada el '.$resultado["validation"];
+        $validacion = ["estilo"=>$estilo, "val"=>$val];
+    }
+    
+    if($size < 3){
+        $height = "margin-top:5%;height: 500px";
+    }
+?>
+
+<div class="col-xs-12 col-sm-6 col-md-10 sidenav_cont">      
+    <div class="conteiner form_serch" style="<?= $height ?>">
+
+        <h4 class="text-center" style="margin-bottom: -15px">PRIMER INGRESO</h4>
+        <h1 class="text-center">REVISI&Oacute;N DE CREDENCIALES</h1><br>
+        <div class="row" style="width: 100%;">
+            
+            <div class="row">
+                <div class="col-md-5">
+                      <form name="serch-form" id="serch-form" action="<?= $this->url("primeringreso", ['action'=>'buscaralumno']); ?>" method="post" style="margin-left: 5%">
+                          <input id="status" name="status" type="text" value="1" hidden>
+                          <input id="beforemat" name="beforemat" type="text" value="<?= $resultado["matricula"] ?>" hidden>
+                          <p id="msg_err" style="display: none;font-size: 14pt;">Por favor ingrese la matr&iacute;cula que aparece impresa en la credencial</p>
+                          <span>Ingresa la matr&iacute;cula del alumno:</span><br>
+                          <div class="input-group">
+                              <input name="serch" id="serch" type="text" class="form-control" placeholder="Buscar matr&iacute;cula..." minlength="9" maxlength="9" required style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" value="" autocomplete="off" autofocus>
+                              <div class="input-group-btn">
+                                  <button class="btn btn-default" type="submit" id="serch-btn"><i class="glyphicon glyphicon-search"></i></button>
+                              </div>
+                          </div>
+                      </form
+                </div>
+            </div>
+            <div id="form_report_cred" class="col-md-5 checkbox">
+                <form action="<?= $this->url("primeringreso", ['action'=>'reporterror']); ?>" method="post">
+                    <input id="report_matricula" name="report_matricula" type="text" value="<?= $resultado["matricula"] ?>" hidden>
+                    <button class="btn btn-default" type="submit" id="btn_enviar_error" name="btn_enviar_error" style="<?= $css["sty"]?>;margin-top:2%" >Enviar solicitud de Reimpresi&oacute;n</button>
+                </form>
+            </div>
+            <div class="col-md-10 checkbox" style="margin-left:2%; margin-top:1%">
+                <label><input type="checkbox" value="3">Datos de impresi&oacute;n incorrectos</label>
+            </div>
+            
+        </div>
+
+
+        <?php if($band == 2){ ?>
+        <div class="row">
+                    <?php if($size > 3){ ?>
+                        <table class="table table-bordered text-right raised marca_agua">
+                            <tbody>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td class="text-center">
+                                        <img src="<?= $this->basePath('img/logo_cb2.png')?>" class="img-responsive" id="logo">
+                                    </td>
+                                    <td>
+                                        <b><p class="text-center" style="font-size:18px;margin-top:25px;">PRESENCIAL</p></b>
+                                        <b>&nbsp;<p class="text-center" style="font-size:18px;color: red;"><?= $resultado["turno"] ?></p></b>
+                                    </td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td><h3 class="cred"><b><?= $resultado["nombre"] ?></b></h3>
+                                        <h3 class="cred"><b><?= $resultado["apellidos"] ?></b></h3>
+                                    </td>
+                                    <td rowspan="3">
+                                        <?php
+                                                if($resultado["img"] == ""){
+                                                    $foto = $this->basePath('img/noimagen.jpg');
+                                                }else{
+                                                    $imdata = base64_encode($resultado["img"]);
+                                                    $foto = "data:image/jpg;base64,".$imdata;
+                                                }
+                                            ?>
+                                            <img src="<?= $foto ?>" id="foto_std" style=" align-content: left;border: 2px solid #00a89c;border-radius: 5px;padding: 5px; ">
+                                    </td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td><h3 class="cred"><p style="font-size: 12px">MATRICULA</p><b><?= $resultado["matricula"] ?></b></h3></td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td><h3 class="cred"><p style="font-size: 12px">GRUPO</p><b><?= $resultado["grupo"] ?></b></h3></td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>
+                                        <h3 class="cred"><p style="font-size: 12px">CURP</p><b><?= $resultado["curp"] ?></b></h3><br>
+                                        <h4 class="cred"><p style="font-size: 12px">CORREO</p><b><?= $resultado["correo"] ?></b></h4>
+                                    </td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td rowspan="2"class="text-center">
+                                        <img src="<?= $this->basePath('iconos/logoplantel_'.$resultado["plantel"].'.png')?>" class="img-responsive" id="logo">
+                                    </td>
+                                    <td><h5 class="text-center" style="margin-top: 30%"><b>Impresa el <?= $resultado["impresion"] ?></b></h5></td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <h4 id="status" name="status" style="<?= $validacion["estilo"] ?>;margin-left: 25%;">Estado: <b><?= $validacion["val"] ?></b></h4>
+                        
+                    <?php }else{ ?>
+                        <div style="width: 100%; margin-top:5%;" class="text-center">
+                            <h3 style="font-style: italic;color: #00645d;font-weight: bold " class="text-center">La matr&iacute;cula <strong><?= $data["serch"] ?></strong> no fue encontrada! Por favor verifique que los datos sean correctos.</h3>
+                        </div>
+                    <?php } ?>
+               
+            
+        </div>
+        <?php } ?>
+
+    </div>
+</div>

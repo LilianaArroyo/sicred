@@ -1,0 +1,249 @@
+<?php
+    $title = 'BUSCAR ALUMNO POR NOMBRE';
+    $this->headTitle($title);
+
+    if ($band == 2 and ($resultado != "No se pudo resolver la busqueda")){
+        $tam = count($resultado["alum"]);
+    }
+?>
+<div class="col-xs-12 col-sm-6 col-md-10 sidenav_cont">      
+    <div class="conteiner form_serch" style="<?=  $height ?>">
+
+        <h1 style="text-align: center">BUSCAR ALUMNO</h1><br>
+        <div class="row" style="width: 100%">
+            <?php if ($band == 2 and ($resultado == "No se pudo resolver la busqueda")){ ?>
+                <<div style="width: 100%">
+                    <h4 style="text-align: center; font-style: italic;color: #00645d; margin-bottom: 2%;font-weight: bold">Para obtener una mejor resultado complete por los menos dos de los siguientes campos</h4>
+                </div>
+            <?php } ?>
+            
+            <form name="serch-form" id="serch-form" action="<?= $this->url("plantel", ['action'=>'buscaralumnonombre']);?>" method="post" class="form-inline" style="width: 100%; margin:0 0 3% 12%">
+                <div class="form-group" style="margin-right: 20px">
+                    <label class="control-label" for="apat" style="font-size: 16px">Primer Apellido*:</label>
+                    <input class="form-control" id="apat" name="apat" type="text" placeholder="Primer Apellido" required style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" autofocus/> 
+                </div>
+                <div class="form-group" style="margin-right: 20px">
+                    <label class="control-label" for="amat" style="font-size: 16px">Segundo Apellido:</label>
+                    <input class="form-control" id="amat" name="amat" type="text" placeholder="Segundo Apellido" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
+                </div>
+                <div class="form-group" style="margin-right: 20px">
+                    <label class="control-label" for="name" style="font-size: 16px">Nombre(s):</label>
+                    <input class="form-control" id="nom" name="nom" type="text" placeholder="Nombre(s)" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"/> 
+                </div>
+                <button class="btn btn-default btn-md" type="submit" id="serch-btn" style="width: 120px; margin-left: 5px; font-size: 16px"> Buscar&nbsp;<span class="glyphicon glyphicon-search"></span></button>
+            </form>
+        </div>
+
+        <?php if($band == 2 and ($resultado != "No se pudo resolver la busqueda")){ ?>
+            <div class="row">
+                <?php if($tam == 1){
+                            foreach ($resultado["alum"] as $aux){ ?>
+                            <h3 class="text-center" style="color: #00756d; font-style: italic"><b><?= $aux["status"] ?></b></h3>
+                            <table class="table table-bordered text-right raised marca_agua">
+                                <tbody>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td class="text-center">
+                                            <img src="<?= $this->basePath('img/logo_cb2.png')?>" class="img-responsive" id="logo">
+                                        </td>
+                                        <td>
+                                            <b><p class="text-center" style="font-size:18px;margin-top:25px;"><?= $aux["modalidad"] ?></p></b>
+                                            <b>&nbsp;<p class="text-center" style="font-size:18px;color: red;"><?= $aux["turno"] ?></p></b>
+                                        </td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td><h3 class="cred"><b><?= $aux["nombre"] ?></b></h3>
+                                            <h3 class="cred"><b><?= $aux["apellidos"] ?></b></h3>
+                                        </td>
+                                        <td rowspan="3">
+                                            <?php
+                                                if($aux["img"] == ""){
+                                                    $foto = $this->basePath('img/noimagen.jpg');
+                                                }else{
+                                                    $imdata = base64_encode($aux["img"]);
+                                                    $foto = "data:image/jpg;base64,".$imdata;
+                                                }
+                                            ?>
+                                            <img src="<?= $foto ?>" id="foto_std" style=" align-content: left;border: 2px solid #00a89c;border-radius: 5px;padding: 5px; ">
+                                                   
+                                        </td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td><h3 class="cred"><p style="font-size: 12px">MATRICULA</p><b><?= $aux["matricula"] ?></b></h3></td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>
+                                            <h3 class="cred"><p style="font-size: 12px">CURP</p><b><?= $aux["curp"] ?></b></h3><br>
+                                            <h4 class="cred"><p style="font-size: 12px">CORREO</p><b><?= $aux["correo"] ?></b></h4>
+                                        </td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td rowspan="2"class="text-center">
+                                            <img src="<?= $this->basePath('iconos/logoplantel_'.$aux["plantel"].'.png')?>" class="img-responsive" id="logo">
+                                        </td>
+                                        <td></td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                      <?php } ?>
+                <?php }elseif($tam >= 2){ ?>
+                            <div class="row">
+                                <table class="table table-striped text-center alum" style="width: 85%;font-size: 18px;">
+                                    <thead>
+                                        <tr>
+                                            <td>MATRICULA</td>
+                                            <td>NOMBRE</td>
+                                            <td>PLANTEL</td>
+                                            <td>ESTATUS</td>
+                                        </tr>                                        
+                                    </thead>
+                                    <tbody>
+                                       <?php foreach($resultado["alum"] as $aux){ ?>
+                                                   <?php
+                                                        if($aux["img"] == ""){
+                                                            $foto = $this->basePath('img/noimagen.jpg');
+                                                        }else{
+                                                            $imdata = base64_encode($aux["img"]);
+                                                            $foto = "data:image/jpg;base64,".$imdata;
+                                                        }
+                                                    ?>
+
+                                                    <tr onclick='desplegarCred("<?= $aux["nombre"]?>", "<?= $aux["apellidos"]?>"," <?= $foto ?>", "<?= $aux["matricula"] ?>", "<?= $aux["curp"]?>", "<?= $aux["correo"]?>", "<?= $this->basePath('iconos/logoplantel_'.$aux["plantel"].'.png')?>", "<?= $aux["status"] ?>", "<?= $aux["modalidad"] ?>", "<?= $aux["turno"] ?>" )' >
+                                                        <td><?= $aux["matricula"] ?></td>
+                                                        <td><?= $aux["nombre"]." ".$aux["apellidos"] ?></td>
+                                                        <td><?= $aux["plantel"] ?></td>
+                                                        <td><?= $aux["status"] ?></td>
+                                                    </tr>
+                                       <?php }?> 
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal" id="modalCred">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content" style="width: auto">
+                            <div class="row">
+                                <button type="button" class="close" data-dismiss="modal">Cerrar</button>
+                            </div>
+
+                            <div  id="credencial" name="credencial" class="row" style="display:none">
+                                <h3 class="text-center" style="color: #00756d; font-style: italic;font-weight: bold" id="estatus" name="estatus"></h3>
+                                <table class="table table-bordered text-right raised marca_agua mod">
+                                    <tbody>
+                                        <tr>
+                                            <td>&nbsp;</td>
+                                            <td class="text-center">
+                                                <img src="<?= $this->basePath('img/logo_cb2.png')?>" class="img-responsive" id="logo">
+                                            </td>
+                                            <td>
+                                                <b><p class="text-center" style="font-size:18px;margin-top:25px;" name="modalidad" id="modalidad"></p></b>
+                                                <b>&nbsp;<p class="text-center" style="font-size:18px;color: red;" name="turno" id="turno"></p></b>
+                                            </td>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                            <td>&nbsp;</td>
+                                            <td style="height: 70px"><h3 class="cred" id="nombreAlum" name="nombreAlum" style="font-weight: bold"></h3>
+                                                <h3 class="cred" id="apallidosAlum" name="apellidosAlum" style="font-weight: bold"></h3>
+                                            </td>
+                                            <td rowspan="3">
+                                                <img src="" id="foto_std" style="align-content: left;border: 2px solid #00a89c;border-radius: 5px;padding: 5px;">
+                                            </td>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                            <td>&nbsp;</td>
+                                            <td style="height: 70px"><h3 class="cred"><p style="font-size: 12px">MATRICULA</p><b><p id="matricula" name="matricula"></p></b></h3></td>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                            <td>&nbsp;</td>
+                                            <td style="height: 60px">
+                                                <h3 class="cred"><p style="font-size: 12px">CURP</p><b><p id="curp" name="curp"></p></b></h3><br>
+                                                <h4 class="cred"><p style="font-size: 12px">CORREO</p><b><p id="correo" name="correo"></p></b></h4>
+                                            </td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                            <td>&nbsp;</td>
+                                            <td rowspan="2"class="text-center">
+                                                <img src="" class="img-responsive" id="logoplantel" style=" margin-left: 2%;width: auto;height: 87px;">
+                                            </td>
+                                            <td></td>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php }elseif($tam == 0){ ?>
+                        <h3 style="text-align: center; margin: 7% 0 10% 0; font-style: italic; color: #00645d;font-weight: bold"> No se encontr&oacute; a <strong><?= $datos["nom"]." ".$datos["apat"]." ". $datos["amat"]?></strong> </h3>
+                <?php }?>
+             </div>
+        <?php }?>
+
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript" language="JavaScript">
+   function desplegarCred(nombre, apellidos, foto, matricula, curp, correo, logoplantel, estatus, modalidad, turno){
+        document.getElementById("nombreAlum").innerHTML = nombre;
+        document.getElementById("apallidosAlum").innerHTML = apellidos;
+        document.getElementById("matricula").innerHTML = matricula;
+        document.getElementById("curp").innerHTML = curp;
+        document.getElementById("correo").innerHTML = correo;
+        document.getElementById("estatus").innerHTML = estatus;
+        document.getElementById("modalidad").innerHTML = modalidad;
+        document.getElementById("turno").innerHTML = turno;
+        
+
+        //imagenes
+        imgplantel = document.getElementById("logoplantel");
+        imgplantel.setAttribute("src",logoplantel);
+
+        imgalum = document.getElementById("foto_std");
+        imgalum.setAttribute("src",foto);
+
+        document.getElementById('credencial').style.display = 'block';
+        
+        //MODAL
+        var modal = document.getElementById('modalCred');
+        var span = document.getElementsByClassName("close")[0];
+
+        modal.style.display = "block";
+
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+        window.onclick = function (ev) {
+            if(ev.target == modal){
+                modal.style.display = "none";
+            }
+        }
+    }
+</script>
+

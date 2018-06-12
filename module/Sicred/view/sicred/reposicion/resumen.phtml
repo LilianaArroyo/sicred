@@ -1,0 +1,153 @@
+<?php
+     $title = 'RESUMEN';
+    $this->headTitle($title);
+
+    $meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
+?>
+
+<!--*************************************************** -->
+<div class="col-xs-12 col-sm-6 col-md-10 sidenav_cont">      
+    <div class="conteiner form_serch" style="margin-top:2%">
+
+        <h2 style="margin-left: 15%;">RESUMEN DE SOLICITUDES DE REPOSICI&Oacute;N DE CREDENCIALES</h2><br>
+        <div class="row" style="width: 100%; <?=  $css ?>">
+            
+            <form name="ordenar-form" id="ordenar-form" action="<?= $this->url("reposicion", ['action'=>'resumen']); ?>" method="post" class="form-inline" style="width: 100%; margin:0 0 3% 12%">
+                    <div class="form-group" style="width: 30%; height: 10%">
+                        <label class="control-label" for="date">Plantel:</label>
+                        <div class="form-group">
+                            <select id="plantel" name="plantel" class="form-control"  onchange="" required>
+                                <option id="selection" value="">Seleccione un plantel</option>
+                                <?php for ($i=1; $i<=20;$i++) {
+                                    if($band == 2){
+                                        if ($i === (int)($data->plantel)) {?>
+                                            <option id="<?= $i ?>" value="<?= $i ?>" selected> <?= $i ?> </option>
+                                        <?php }else{ ?>
+                                        <option id="<?= $i ?>" value="<?= $i ?>" > <?= $i ?> </option>
+                                    <?php } ?>
+                                    <?php }else{ ?>
+                                        <option id="<?= $i ?>" value="<?= $i ?>" > <?= $i ?> </option>
+                                    <?php } ?>
+                                <?php }?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="width: 30%; height: 10%;">
+                        <label class="control-label" for="date">MES:</label>
+                        <select id="mes" name="mes" class="form-control"  onchange="" required>
+                            <option id="selection" value="">Seleccione un mes</option>
+                            <?php $id=1;
+                            foreach($meses as $mes){ ?>
+                                <option id="<?= $id ?>" value="<?= $id ?>" > <?= $mes ?> </option>
+                                <?php $id++; ?> 
+                            <?php }//FIN FOREACH ?>
+                        </select>
+                    </div>
+                <button class="btn btn-default btn-md" type="submit" id="serch-btn"> Consultar </button>
+            </form>
+        </div>
+
+        <?php if($band == 2){ ?>
+                <div class="row">
+                    <br>
+                    <h3 style="margin-left: -15%;"></h3><br>
+                    <table class="table table-striped" id="est" name="est" style="width: 85%">
+                        <thead>
+                        <tr>
+                            <td class="text-center"><b>FECHA DE SOLICITUD</b></td>
+                            <td class="text-center"><b>TOTAL CREDENCIALES SOLICITADAS</b></td>
+                            <td class="text-center"><b>TOTAL REVISADAS</b></td>
+                            <td class="text-center"><b>TOTAL ENTREGADAS</b></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php $id= 1; $tVal = 0; $tEnt=0; $tCred=0;?>
+                        <?php foreach ($lista as $total){ ?>
+                            <?php if($total["rev"]==null and $total["entr"]==null){ ?>
+                                <tr>
+                                    <td class="text-center"><b><p><?= $total["fecha"] ?></p></b></td>
+                                    <td class="text-center"><?= $total["total"] ?></td>
+                                    <td class="text-center"><b><p style="color:red">0</p></b></td>
+                                    <td class="text-center" bgcolor="#A3EAC7"><b><p style="color:red">0</p></b></td>
+                                </tr>
+                            <?php }elseif($total["entr"]==null){?>
+                                <tr>
+                                    <td class="text-center"><b><p style="color:green"><?= $total[2] ?></p></b></td>
+                                    <td class="text-center"><?= $total["total"] ?></td>
+                                    <td class="text-center"><?= $total["rev"] ?></td>
+                                    <td class="text-center"><b><p style="color:green">0</p></b></td>
+                                </tr>
+                            <?php }elseif($total["rev"]==null){?>
+                                <tr>
+                                    <td class="text-center"><b><p style="color:blue"><?= $total[2] ?></p></b></td>
+                                    <td class="text-center"><?= $total["total"] ?></td>
+                                    <td class="text-center"><b><p style="color:blue">0</p></b></td>
+                                    <td class="text-center"><?= $total[5] ?></td>
+                                </tr>
+                            <?php }elseif($total["rev"] != $total["total"] AND $total["entr"]!=$total["total"]){?>
+                                <tr>
+                                    <td class="text-center"><b><p style="color:red"><?= $total[2] ?></p></b></td>
+                                    <td class="text-center"><?= $total["total"] ?></td>
+                                    <td class="text-center"><b><p style="color:blue"><?= $total["rev"] ?></p></b></td>
+                                    <td class="text-center"><b><p style="color:green"><?= $total["entr"] ?></p></b></td>
+                                </tr>
+                            <?php }elseif($total["entr"]!=$total["total"]){?>
+                                <tr>
+                                    <td class="text-center"><b><p style="color:green"><?= $total[2] ?></p></b></td>
+                                    <td class="text-center"><?= $total["total"] ?></td>
+                                    <td class="text-center"><?= $total["rev"] ?></td>
+                                    <td class="text-center"><b><p style="color:green"><?= $total["entr"] ?></p></b></td>
+                                </tr>
+                            <?php }elseif($total["rev"] != $total["total"]){?>
+                                <tr>
+                                    <td class="text-center"><b><p style="color:blue"><?= $total[2] ?></p></b></td>
+                                    <td class="text-center"><?= $total["total"] ?></td>
+                                    <td class="text-center"><b><p style="color:blue"><?= $total[4] ?></p></b></td>
+                                    <td class="text-center"><?= $total["entr"] ?></td>
+                                </tr>
+                            <?php }else{ ?>
+                                <tr>
+                                    <td class="text-center"><?= $total[2] ?></td>
+                                    <td class="text-center"><?= $total["total"] ?></td>
+                                    <td class="text-center"><?= $total["rev"] ?></td>
+                                    <td class="text-center"><?= $total["entr"] ?></td>
+                                </tr>
+                            <?php } ?>
+                            <?php $tEnt=$tEnt+0;
+                                  $tVal=$tVal+0;
+                                  $tCred=$tCred+$total["total"]; ?>
+                        <?php } ?>
+                        <tr>
+                            <?php if($tCred != $tVal and $tCred != $tVal){ ?>
+                                <td class="text-center" bgcolor="#B0C4DE"><b>TOTAL</b></td>
+                                <td bgcolor="#B0C4DE" class="text-center"><b><?= $tCred ?></b></td>
+                                <td bgcolor="#B0C4DE" class="text-center"><b><p style="color:blue"><?= $tVal ?></p></b></td>
+                                <td bgcolor="#B0C4DE" class="text-center"><b><p style="color:green"><?= $tEnt ?></p></b></td>
+                            <?php }elseif($tCred != $tVal){?>
+                                <td bgcolor="#B0C4DE" class="text-center"><b>TOTAL</b></td>
+                                <td bgcolor="#B0C4DE" class="text-center"><b><?= $tCred ?></b></td>
+                                <td bgcolor="#B0C4DE" class="text-center"><b><p style="color:blue"><?= $tVal ?></p></b></td>
+                                <td bgcolor="#B0C4DE" class="text-center"><b><?= $tEnt ?></b></td>
+                            <?php }elseif($tCred != $tVal){?>
+                                <td bgcolor="#B0C4DE" class="text-center"><b>TOTAL</b></td>
+                                <td bgcolor="#B0C4DE" class="text-center"><b><?= $tCred ?></b></td>
+                                <td bgcolor="#B0C4DE" class="text-center"><b><?= $tVal ?></b></td>
+                                <td bgcolor="#B0C4DE" class="text-center"><b><p style="color:green"><?= $tEnt ?></p></b></td>
+                            <?php }else{ ?>
+                                <td bgcolor="#B0C4DE" class="text-center"><b>TOTAL</b></td>
+                                <td bgcolor="#B0C4DE" class="text-center"><b><?= $tCred ?></b></td>
+                                <td bgcolor="#B0C4DE" class="text-center"><b><?= $tVal ?></b></td>
+                                <td bgcolor="#B0C4DE" class="text-center"><b><?= $tEnt ?></b></td>
+                            <?php }?>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            <?php }?>
+
+    </div>
+</div>
+
+

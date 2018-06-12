@@ -1,0 +1,34 @@
+<?php
+    $title = 'REVISI&Oacute;N DE CREDENCIALES';
+    $this->headTitle($title);
+?>
+
+<div class="col-xs-12 col-sm-6 col-md-10 sidenav_cont">      
+    <div class="conteiner form_serch" style="margin-top:5%; height: 500px">
+
+      <h4 class="text-center" style="margin-bottom: -15px">PRIMER INGRESO</h4>
+      <h1 class="text-center">REVISI&Oacute;N DE CREDENCIALES</h1><br>
+	    <form name="serch-form" id="serch-form" action="<?= $this->url("primeringreso", ['action'=>'buscaralumno']); ?>" method="post" class=" col-xs-4" style="margin-left: 5%">
+	        <input id="status" name="status" type="text" value="1" hidden>
+	        <span>Ingresa la matr&iacute;cula del alumno:</span><br>
+	        <div class="input-group">
+	            <input name="serch" id="serch" type="text" class="form-control" placeholder="Buscar matr&iacute;cula..." minlength="9" maxlength="9" required onkeyup="javascript:this.value=this.value.toUpperCase();" value="" autocomplete="off" autofocus>
+	            <div class="input-group-btn">
+	                <button class="btn btn-default" type="submit" id="serch-btn"><i class="glyphicon glyphicon-search"></i></button>
+	            </div>
+	        </div>
+	    </form>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+

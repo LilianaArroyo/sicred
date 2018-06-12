@@ -1,0 +1,270 @@
+<?php
+$title = 'REPOSICI&Oacute;N DE CREDENCIALES';
+$this->headTitle($title);
+
+?>
+
+<div class="col-xs-12 col-sm-6 col-md-10 sidenav_cont">
+    <div class="conteiner form_serch" style=" <?=  $css ?>">
+
+        <h1 style="margin-left: 32%">REPOSICI&Oacute;N DE CREDENCIALES</h1><br>
+        <div class="row" style="width: 100%;">
+            <form name="ordenar-form" id="ordenar-form" action="<?= $this->url("reposicion", ['action'=>'reposiciones']); ?>" method="post" class="form-inline" style="width: 100%; margin:0 0 3% 16%">
+                <div class="form-group" style="width: 35%; height: 10%">
+                    <label class="control-label" for="date" style="font-size: 18px;">Fecha de Solicitud*:&nbsp;</label>
+                    <div class="input-group date" id="date" name="date" style=""> <!-- Date input -->
+                        <input class="form-control" id="date" name="date" style="font-size: 17px" type="text" value="<?= $fecha ?>" required placeholder="Fecha solicitud" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
+                        <span class="input-group-addon" id="calendar" onclick=""><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                </div>
+
+                <button class="btn btn-default btn-md" type="submit" id="serch-btn" style="width: 10%"> Buscar </button>
+            </form>
+        </div>
+
+        <?php if($band == 2){ ?>
+            <div class="row">
+                <?php if(count($lista) > 0){
+                    foreach ($plantel as $plt){ $j=1; $i=0; $a = array();?>
+                        <div class="row">
+                            <div class="row" class="titulo_boton" onclick="muestra_oculta('contenido<?= $plt ?>')" id="mostrar">
+                                <h4 class="text-center" style="font-weight: bold">&nbsp;&nbsp;PLANTEL <?= $plt ?> </h4>
+                            </div>
+                            <div class="row" id="contenido<?= $plt ?>" name="contenido<?= $plt ?>" style="display: none">
+                                <table class="table table-striped" style="width: 85%" id="tabla<?= $plt ?>">
+                                    <!-- los datos van ordenados por fecha, plantel,nombre asc-->
+                                    <thead>
+                                    <tr>
+                                        <td class="text-center" style="font-size: 16px">ID</td>
+                                        <?php if(array_search('ID_IMPRESION', $_SESSION['opc'])){ ?>
+                                            <td class="text-center" style="font-size: 16px" data-campo='id'>ID IMPRESI&Oacute;N</td>
+                                        <?php }?>
+                                        <td class="text-center" style="font-size: 16px" data-campo='matricula'>MATRICULA</td>
+                                        <td class="text-center" style="font-size: 16px" data-campo='nombre'>NOMBRE</td>
+                                        <td class="text-center" style="font-size: 16px" data-campo='correo'>CORREO</td>
+                                        <td class="text-center" style="font-size: 16px" data-campo='pltl'>PLANTEL</td>
+                                        <td class="text-center" style="font-size: 16px" data-campo='fech_sol'>FECHA DE SOLICITUD</td>
+                                        <td class="text-center" style="font-size: 16px" data-campo='fech_imp'>FECHA DE IMPRESI&Oacute;N</td>
+                                        <td class="text-center" style="font-size: 16px" data-campo='fech_rev'>FECHA DE REVISI&Oacute;N</td>
+                                        <td class="text-center" style="font-size: 16px" data-campo='fech_entr'>FECHA DE ENTREGA</td>
+                                        <td class="text-center" style="font-size: 16px" >ESTATUS</td>
+                                        <td class="text-center" style="font-size: 16px" >OBSERVACIONES</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php if(array_search('CONFIRMAR_IMPRESION', $_SESSION['opc'])){ ?>
+                                                <form id="impresion" name="impresion" action="<?= $this->url("reposicion", ['action'=>'reposicionesconf']); ?>" method="post">
+                                                    <input type="text" id="fecha" name="fecha" value="<?= $fecha ?>" hidden>
+                                                    <input type="text" id="plantel" name="plantel" value="<?= $plt ?>" hidden>
+                                    <?php } ?>
+                                    <?php
+                                    foreach ($lista as $alum){
+                                        if ($alum[5] == $plt){ ?>
+                                            <?php if($alum[12] == 1){
+                                                $style='color: red;font-weight: bold';
+                                            }elseif ($alum[12] == 2){
+                                                $style='color: blue;font-weight: bold';
+                                            }elseif ($alum[12] == 3){
+                                                $style='color: green;font-weight: bold';
+                                            }elseif ($alum[12] == 4){
+                                                $style='color: #00958a;font-weight: bold';
+                                            }elseif ($alum[12] == 5){
+                                                $style='color: red;font-weight: bold';
+                                            }elseif ($alum[12] == null){
+                                                $style='';
+                                            } ?>
+                                            <tr id="<?= $alum[1] ?>">
+                                                <td class="text-center"><?= $j ?></td>
+                                                <?php $j++; ?>
+                                                <?php if(array_search('ID_IMPRESION', $_SESSION['opc'])){ ?>
+                                                    <td class="text-center" data-campo='id_imp' style="<?= $style ?>"><?= $alum[0] ?></td>
+                                                <?php }?>
+                                                <td data-campo='matricula' style="<?= $style ?>"><p id="mat<?= $alum[1] ?>"><?= $alum[1] ?></p></td>
+                                                <td data-campo='nombre'><?= $alum[2]." ".$alum[3]." ".$alum[4] ?></td>
+                                                <td data-campo='correo'><?= $alum[9] ?></td>
+                                                <td class="text-center" data-campo='pltl'><?= $alum[5] ?></td>
+                                                <td class="text-center" data-campo='fech_sol'><?= $alum[7] ?></td>
+                                                <?php if(array_search('CONFIRMAR_IMPRESION', $_SESSION['opc']) AND $alum[12] == 1){ $i++; ?>
+                                                    <td class="text-center" data-campo='fech_imp' id="imp">
+                                                        <div class="checkbox">
+                                                            <p id="imp<?= $alum[1] ?>"><input type="checkbox" id="mat<?= $i ?>" name="mat<?= $i ?>" value="<?= $alum[1] ?>" checked></p>
+                                                        </div>
+                                                    </td>
+                                                <?php }else{ ?>
+                                                    <td id="imp" class="text-center" data-campo='fech_imp'><p id="imp<?= $alum[1] ?>"><?= $alum[6] ?></p></td>
+                                                <?php } ?>
+                                                <td class="text-center" data-campo='fech_rev'><p id="rev<?= $alum[1] ?>"><?= $alum[8] ?></p></td>
+                                                <?php if($_SESSION['opc'][0] == 'CONFIRMAR_ENTREGA' AND $alum[10] == "" AND $alum[12] == 3){ array_push($a, $alum[1]);?>
+                                                    <td id="ent<?= $alum[1] ?>" class="text-center" data-campo='fech_entr'>
+                                                        <div class="checkbox">
+                                                            <p id="ent<?= $alum[1] ?>"><input type="checkbox" name="mat<?= $i ?>" value="<?= $alum[1] ?>" checked></p>
+                                                        </div>
+                                                    </td>
+                                                <?php }else{ ?>
+                                                    <td id="ent<?= $alum[1] ?>" class="text-center" data-campo='fech_entr'><p id="ent<?= $alum[1] ?>"><?= $alum[10] ?></p></td>
+                                                <?php } ?>
+                                                <td data-campo='status' style="font-size: 16px;<?= $style ?>"><p id="stts<?= $alum[1] ?>"><?= $alum[11] ?></p></td>
+                                                <td data-campo='obs'><p><?= $alum[13] ?></p></td>
+                                            </tr>
+                                        <?php } ?>
+                                    <?php } //FIN FOREACH matriculas?>
+                                    </tbody>
+                                </table>
+                                <div id="resp"></div>
+
+                                <?php if(array_search('CONFIRMAR_IMPRESION', $_SESSION['opc']) and $i != 0  and $band == 2){ ?>
+                                        <input id="contador" name="contador" type="text" value="<?= $i ?>" hidden>
+                                        <button id="btnconf<?= $plt ?>" name="btnconf<?= $plt ?>" type="submit" class="btn btn-default btn-md" style="margin-left: 80%;margin-bottom: 2%"> <span class="glyphicon glyphicon-ok"></span>&nbsp;Confirmar Impresi&oacute;n</button>
+                                    </form>
+                                <?php }?>
+                               <?php if($_SESSION['opc'][0] == 'CONFIRMAR_ENTREGA' AND count($a) != 0  and $band == 2){ ?>
+                                    <form id="impresion" name="impresion" action="<?= $this->url("reposicion", ['action'=>'reposicionesconf']); ?>" method="post">
+                                        <input type="text" id="fecha" name="fecha" value="<?= $fecha ?>" hidden>
+                                        <input type="text" id="plantel" name="plantel" value="<?= $plt ?>" hidden>
+                                        <?php $i=0; foreach ($a as $b){ ?>
+                                            <input type="text" id="mat<?= $i ?>" name="mat<?= $i ?>" value="<?= $b ?>" hidden>
+                                        <?php $i++; } ?>
+                                        <button id="btnconf<?= $plt ?>" name="btnconf<?= $plt ?>" type="submit" class="btn btn-default btn-md" style="margin-left: 80%;margin-bottom: 2%"> <span class="glyphicon glyphicon-ok"></span>&nbsp;Confirmar Entrega</button>
+                                    </form>
+                                <?php }?>
+                            </div>
+                        </div>
+                    <?php }//FIN FOREACH plantel?>
+
+                <?php }else{ ?>
+                    <h3 style="text-align: center; margin: 7% 0 10% 0; font-style: italic; color: #00645d; font-weight: bold"> No se encontraron solicitudes del d&iacute;a <?= $fecha ?> </h3>
+                <?php } ?>
+            </div>
+
+            <!-- M O D A L  -->
+            <div class="modal" id="modalForm">
+                <div class="modal-dialog" role="document">
+                    <!-- MODAL CONTENT -->
+                    <div class="modal-content">
+                        <div class="row">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="row">
+                            <h3 class="modal-title" id="modalFormL">Rechazar la solicitud del alumno con matr&iacute;cula <h3 id="matricula-h5" style="font-weight: bold; margin: 0"></h3></h3>
+                        </div>
+                        <div class="row" style="margin-top: 3%">
+                            <form action="<?= $this->url("reposicion", ['action'=>'rechazarsol']); ?>" method="post" name="rechazo" id="rechazo">
+                                <div class="form-group" hidden>
+                                    <input type="text" class="form-control" id="materror" name="materror" hidden>
+                                    <input type="text" class="form-control" id="fecherror" name="fecherror" value="<?= $fecha ?>" hidden>
+                                </div>
+                                <div class="form-group" style="width: auto;">
+                                    <label class="control-label" for="date">Escriba el motivo por el cu&aacute;l no se va a generar dicha solicitud:</label>
+                                    <textarea class="form-control" id="motrech" name="motrech" onkeyup="javascript:this.value=this.value.toUpperCase();" style="text-transform:uppercase;" placeholder="" rows="2" required autofocus></textarea>
+                                </div>
+                                <button id="btn-envrepor" name="btn-envrepor" class="btn btn-default">Enviar reporte</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <?php } //fin band?>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    function muestra_oculta(id){
+        if (document.getElementById){ //se obtiene el id
+            var el = document.getElementById(id); //se define la variable "el" igual a nuestro div
+            el.style.display = (el.style.display == 'none') ? 'block' : 'none'; //damos un atributo display:none que oculta el div
+        }
+    }
+
+    $('input[type="checkbox"]').on('change', function (e) {
+        if(this.checked == false){
+            var mat = $(e.currentTarget).val();
+            var modal = document.getElementById('modalForm');
+            var span = document.getElementsByClassName("close")[0];
+
+            console.log('Checkbox ' + mat + ' checked');
+
+            document.getElementById("matricula-h5").innerHTML = mat;
+            //document.getElementById("mat-error").innerHTML = mat;
+            $('#materror').attr("value", mat);
+            modal.style.display = "block";
+
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+            window.onclick = function (ev) {
+                if(ev.target == modal){
+                    modal.style.display = "none";
+                }
+            }
+        }
+    });
+
+    $('#btn-envrepor').click(function (e) {
+        e.preventDefault();
+        var mat = $("#materror").val();
+        var fecha = $("#fecherror").val();
+        var motivo = $("#motrech").val();
+        var modal = document.getElementById('modalForm');
+
+
+        var matricula = "mat"+ mat;
+        var p_imp = "#imp" + mat;
+        var p_entr = "ent" + mat;
+        var stts = "#stts" + mat;
+        var rev = "rev" + mat;
+        console.log("matricula: "+matricula, + " impresion: "+p_imp+ " status: "+stts);
+        $.ajax({
+            type:"POST",
+            url: "/reposicion/reposiciones",
+            data: {matr:mat, fecha:fecha,motivo:motivo},
+            success: function (data, textStatus, xhr) {
+
+                document.getElementById(matricula).style.color = "red";
+                $(p_imp).text('');
+                document.getElementById(p_entr).innerHTML = "";
+                document.getElementById(rev).innerHTML = "";
+                $(stts).text('RECHAZADA');
+
+                modal.style.display = "none";
+            }
+        });
+    });
+
+    /*$('#impresion').submit(function (e) {
+        e.preventDefault();
+
+        //var plantel = $("#plantel").val();
+        var cont = $("#contador").val();
+        //var boton = "#btnconf" + plantel;
+
+        console.log("click boton de conf imps");
+        $.ajax({
+            type:$('#impresion').attr("method"),
+            url: $('#impresion').attr("action"),
+            data: $('#impresion').serialize(),
+            success: function (data, textStatus, xhr) {
+                    console.log(data.resultado);
+
+                    var body = "#tabla"+ data.ct_plntl+" "+"tbody"+" "+"tr";
+                    var boton = "#btnconf" + data.ct_plntl;
+
+                    console.log("cambiar input, "+body);
+                    /*$(body).each(function () {
+                        $("input").remove();
+                        // $(this).children("td#imp").val(data.resultado);
+                    });
+
+                    console.log("remover boton"+ boton);
+                    $(boton).remove();
+
+
+            }
+        });
+    });*/
+
+
+
+</script>

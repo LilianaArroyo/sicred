@@ -1,0 +1,48 @@
+<?php
+    $title = 'INICIAR SESI&Oacute;N';
+    $this->headTitle($title);
+
+?>
+
+<div class="col-xs-12 col-sm-6 col-md-10 text-center sidenav">
+    <div class="conteiner form">
+        
+        <h1>INICIAR SESI&Oacute;N</h1><br>
+        <form  name="login" method="post" action="/sicred/login">
+            <?php if($msj == 3){ ?>
+                <div style="margin: 0 0 3% 0">
+                    <span style="text-align: center; font-style: italic; font-weight: bold; color: red;">&#33;ACCESO NO PERMITIDO!</span>
+                </div>
+            <?php } ?>
+            <?php if($msj == "USUARIO INACTIVO"){ ?>
+                <div style="margin: 0 0 3% 0">
+                    <span style="text-align: center; font-style: italic; font-weight: bold; color: red;">&#33;USUARIO INACTIVO!</span>
+                </div>
+            <?php } ?>
+            <?php if($msj == 2){ ?>
+                <div style="margin: 0 0 3% 0">
+                    <span style="text-align: center; font-style: italic; font-weight: bold; color: red;">&#33;EL USUARIO NO EXISTE!</span>
+                </div>
+            <?php } ?>
+            <?php if($msj == -1){ ?>
+                <div style="margin: 0 0 3% 0">
+                    <span style="text-align: center; font-style: italic; font-weight: bold; color: red;">&#33;CONTRASE&Ntilde;A INCORRECTA!</span>
+                </div>
+            <?php } ?>
+            <div class="input-group" style="margin: 0 0 3% 0">
+                <span class="input-group-addon loginspan" style="background-color: transparent;"><i class="glyphicon glyphicon-user"></i></span>
+                <input id="mat_empleado" class="form-control logininput" name="mat_empleado" placeholder="Matricula de empleado" value="" minlength="7" maxlength="8" autocomplete="off" required>
+            </div>
+            <div class="input-group" style="margin: 0 0 3% 0">
+                <span class="input-group-addon loginspan" style="background-color: transparent; border-top: none; border-left: none;"><i class="glyphicon glyphicon-lock"></i></span>
+                <input id="pwd_empleado" type="password" class="form-control logininput" name="pwd_empleado" minlength="5" maxlength="8" placeholder="#MatriculaEmpleado" required>
+            </div>
+            <div>
+                <br>
+                <center><button type="submit" class="btn btn-default" id="btn-ingresar">INGRESAR &nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-log-in"></span></button></center>
+            </div>
+        </form>
+        
+    </div>
+
+</div>
