@@ -28,7 +28,7 @@ class login{
 
             //verificamos si se encontro el usuario
             if(!empty($row)){
-                    //verificamos que la contraseña sea correcta
+                    //verificamos que la contraseÃ±a sea correcta
                     if($row[0] == $pwd){
                         if($row[1]=='SICRED - SUPERUSUARIO'){
                             session_start();
@@ -147,17 +147,15 @@ class login{
                         }
                         
                     }else{
-                         //el usuario existe, contraseña erronea
+                         //el usuario existe, contraseÃ±a erronea
                         return -1;
                     }
 
             }else{
-                //el usuario no existe
+                
                 return 2;
             }
-
-            //$query = null;
-            //$db = null;
+            
         }catch (Exception $e){
             return 0;
         }
@@ -167,8 +165,6 @@ class login{
     private function menu($perfil, $modulo, $db){
         $menu = array();
         $sqlprf = "SELECT PANTALLA FROM USRCB.VW_USUARIO_PERFIL WHERE  ABREVIATURA='SICRED' AND PERFIL='".$perfil."' AND PANTALLA LIKE '".$modulo."' ORDER BY CT_PANTALLA";
-        //$sqlprf = "SELECT PANTALLA FROM USRCB.VW_USUARIO_PERFIL WHERE  ABREVIATURA='SICRED' AND PERFIL='".$perfil."' AND PANTALLA LIKE '".$modulo."' ORDER BY CT_PNTLL";
-
 
         try{
             $query = oci_parse($db, $sqlprf);
@@ -189,8 +185,6 @@ class login{
     private function opcion($perfil, $db){
         $opcion = array();
 
-        //$sqlprf = "SELECT OPCION FROM USRCB.VW_USUARIO_PERFIL WHERE PERFIL='".$perfil."' AND PANTALLA LIKE '".$modulo."' and OPCION IS NOT NULL";
-
         $sqlprf = "SELECT OPCION FROM USRCB.VW_USUARIO_PERFIL WHERE PERFIL='".$perfil."' AND  OPCION IS NOT NULL ORDER BY PANTALLA";        
 
         try{
@@ -208,28 +202,5 @@ class login{
 
     }
     
-    public function verificarUSR(){
-        $conn = new Connect();
-        $db = $conn->connBD();
-        session_start();
-        $_SESSION['aprobmat'] = null;
-        $_SESSION['pendmat'] = null;
-        $_SESSION['aprobmat_pi'] = null;  //variable_primer_ingreso
-        $_SESSION['pendmat_pi'] = null;   //variable_primer_ingreso
-        $_SESSION['matricula'] = '2170104';
-        $_SESSION['perfil'] = 'BUSQUEDA_ALUMNOS';
-        $_SESSION['tipousr'] = 'emisor';
-        $_SESSION['plantel'] = 3;
-        $_SESSION['nombre'] = 'liliana';
-        $_SESSION['apat'] = 'arroyo';
-        $_SESSION['amat'] = 'nazario';
-        $_SESSION['mn_primerIngr'] = self::menu('SICRED - SUPERUSUARIO', '/primeringreso%', $db);
-        $_SESSION['mn_rep'] = self::menu('SICRED - SUPERUSUARIO', '/reposicion%', $db);
-        $_SESSION['mn_plantel'] = self::menu('SICRED - SUPERUSUARIO', '/plantel%', $db);
-        $_SESSION['opc'] = self::opcion('SICRED - SUPERUSUARIO', $db);
-        $_SESSION['periodo'] = '2018A';
-
-        return 1;
-    }
-
+    
 }
