@@ -40,7 +40,7 @@ class ordenarcred{
             
             return $datos;
 
-        }catch(Exception $e){
+        }catch(\Exception $e){
             return $datos;
         }
 
@@ -68,7 +68,7 @@ class ordenarcred{
                 oci_close($db);
                 return $data;
 
-            }catch(Exception $e){
+            }catch(\Exception $e){
                 return $data;
             }
 
@@ -97,7 +97,7 @@ class ordenarcred{
                 oci_free_statement($query);
                 oci_close($db);
 
-            }catch(Exception $e){
+            }catch(\Exception $e){
                 echo "Error: No se pudo ejecutar la sentencia SQL";
             }
 
@@ -129,7 +129,7 @@ class ordenarcred{
             oci_close($db);
             return $data;
 
-        }catch(Exception $e){
+        }catch(\Exception $e){
             return $data;
         }
     }
@@ -167,7 +167,7 @@ class ordenarcred{
                         $update = oci_parse($db, $sqlupdate);
                         oci_execute($update, OCI_COMMIT_ON_SUCCESS);
                         oci_free_statement($update);
-                    }catch(PDOException $e){
+                    }catch(\Exception $e){
                         return "";
                     }
                 }
@@ -188,7 +188,7 @@ class ordenarcred{
             oci_free_statement($update);
 
             return $matricula;
-        }catch(PDOException $e){
+        }catch(\Exception $e){
             return "";
         }
     }
@@ -218,7 +218,7 @@ class ordenarcred{
             oci_free_statement($update);
             oci_close($db);
             
-        }catch(PDOException $e){
+        }catch(\Exception $e){
             return "";
         }
     }
