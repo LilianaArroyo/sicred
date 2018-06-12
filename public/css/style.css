@@ -618,8 +618,8 @@ select.form-control > option:hover {
   background-color: #c6ebe9;
 }
 
-/***************************************+******** media queries (pantallas pequeñas)*************************************+********************/
-/**** si la pantalla es mas pequeña que 1400 pixeles ***/
+/***************************************+******** media queries (pantallas pequeÃ±as)*************************************+********************/
+/**** si la pantalla es mas pequeÃ±a que 1400 pixeles ***/
 @media screen and (max-width: 1930px){
     #logo_sicred{
       height: 90%;
@@ -676,9 +676,8 @@ select.form-control > option:hover {
     table.table-bordered{margin-left: 30%; height: 150px;}
     [type=file] + label {margin: 0 10% 0 0;}
     #cargar-btn{margin: 4% 9% 0 30%;}
-    #foto_std{width: 150px; height: auto;}
 }
-/**** si la pantalla es mas pequeña que 1200 pixeles ***/
+/**** si la pantalla es mas pequeÃ±a que 1200 pixeles ***/
 @media screen and (max-width: 1255px){
     #logo_sicred{
       margin-left: 1%;
@@ -691,7 +690,7 @@ select.form-control > option:hover {
     .form{
         margin:10% 30% 10% 32%;}
 }
-/**** si la pantalla es mas pequeña que 950 pixeles ***/
+/**** si la pantalla es mas pequeÃ±a que 950 pixeles ***/
 @media screen and (max-width: 950px){
     #logo_sicred{
       margin-left: 1%;
@@ -721,7 +720,7 @@ select.form-control > option:hover {
     }
 }
 
-/**** si la pantalla es mas pequeña que 750 pixeles ***/
+/**** si la pantalla es mas pequeÃ±a que 750 pixeles ***/
 @media screen and (max-width: 770px){
     #header{
         width:115%
@@ -751,6 +750,151 @@ select.form-control > option:hover {
     }
     
 }
+
+@media screen and (max-width: 570px){
+    #header {
+        width: 110%;
+        margin: 0;
+        padding: 0;
+    }
+    #div_logobach{ top: -80%; }
+    #logo_bach{ margin-left:60%; width: 48%; }
+    #btn-ingresar{width: 80%;}
+    .lobo{background-size: 100% auto; margin-top: -5% !important; }
+    .form_serch{margin-top: 20% !important;}
+    #serch-form{width: 100%;}
+    table.table-bordered {margin-left: -10%;}
+    table.table-striped {
+        margin-left: 2%;
+        width: 100% !important;
+        margin-top: 4%;
+    }
+    .modal-content { width: 750px !important; }
+    #credencial{ margin-left:15%; }
+    .contact{   
+         width: 80%;
+         margin-right: 10%;
+    }
+    h2.contact { margin: 1% 0 5% 0;} 
+    .sidenav{ margin-left: 0; }
+    #serch-btn{
+      width:80% !important;
+      margin-left: 8% !important;} 
+    
+}
+
+@media screen and (max-width: 420px){
+    #header {
+        width:inherit;
+    }
+    #logo_sicred {
+        width: auto;
+        height: 90%;
+    }
+    #div_titulo {
+        height: inherit;
+        width: 55%;
+        position: absolute;
+        top: 1%;
+        margin-left: -5%;
+    }
+   #div_logosep{
+        display:block;
+        height: 45%;
+        width: auto;
+        
+    }
+    #div_logobach{
+        height:45%;
+        width: auto;
+        margin-top:20%;
+        margin-left: -70%;
+        top: 1 !important;
+    }
+    #logo_bach{
+        width:auto;
+        height:90%;
+    }
+    .sidenav {
+        height: 100%;
+        width: 100%;
+        padding-top: 46px;
+        position: relative;
+    }
+    .form {
+        margin: 10% 0 10% -3%;
+        width:inherit;
+    }
+    #btn-ingresar{
+        width: 80%;
+    }
+    .sidenav_cont {
+        height: 100%;
+        width: 100%;
+        position: relative;
+        left: auto;
+        top: 0;
+    }
+    #div_lobo{ /*inicio*/
+        margin-top: -16%;
+        height: 500px;
+    }
+    .lobo {
+        background-size: 290px auto;
+    }
+    .form_serch{
+        margin-top: 20%;
+    }
+    #serch-form{
+        margin-left: 15%;
+        width: 80%;
+    }
+    table.table-striped {
+        margin-top: 3%;
+        margin-left: 1;
+    }
+
+    #checkbox_error{
+        margin-left: 10%;
+    }
+    .modal {
+        display: none;
+        position: fixed;
+        left: 0;
+        top: 0;
+        overflow: auto;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.4);
+    }
+    .modal-content{
+        width: 200%;
+        margin: auto;
+    }
+    button.close {
+        -webkit-appearance: none;
+        padding: 1% 6%;
+        cursor: pointer;
+        background: 0 0;
+        border: 0;
+    }
+    #modal_credencial{
+        display: block;
+        margin-left: 10%;
+    }
+        
+    div.contact {
+        margin-left: 1%;
+    }
+    h2.contact{
+        margin: 20% 0 2% 1%;
+    }
+    button.contact{
+        width: 90%;
+        margin-right: 5%;
+    }
+    
+}
+
 @media screen and (max-width: 400px){
     #header {
         width:inherit;
@@ -858,6 +1002,33 @@ select.form-control > option:hover {
     
 }
 
+@media screen and (max-width: 380px){
+    #div_titulo {
+        height: inherit;
+        width: auto;
+    }
+    #div_logosep {
+        display:block;
+        height: 45%;
+        width: auto;
+        margin-left: 15%;
+        margin-right: -50%;
+        margin-bottom: 40%;
+    }
+    #div_logobach {
+        height: 50%;
+        width: auto;
+        margin-top: 110%;
+    }
+    .sidenav {
+       margin-left: 10%;
+   }
+   .lobo {
+        margin-top: -15% !important;
+   }
+   .form_serch{margin-top: 30% !important;}
+}
+
 @media screen and (max-width: 300px){
     #header {
         width: 110%;
@@ -898,6 +1069,8 @@ select.form-control > option:hover {
     }
   
 }
+
+
 /*********************************  cargar solicitudes ***********************************************/
 /* ocultamos el input type file */
 [type=file] {
