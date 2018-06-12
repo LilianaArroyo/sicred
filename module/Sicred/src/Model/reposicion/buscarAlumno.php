@@ -23,12 +23,6 @@ class buscarAlumno
 /**********************************************************  P R O C E S O - D E - R E P O S I C I O N  ******************************************************************/
 
    public function getStudentRep($matricula, $db){
-        /*$conn = new Model\Connect();
-        $db = $conn->connBD();
-*/
-        //$sql="select MATRICULA, NOMBRE, PATERNO, MATERNO, PLANTEL, CURP, fecha_solicitud, TURNO ,CORREOINS FROM SIIAA_CRED_ACUM WHERE MATRICULA ='".$matricula."'";
-
-        /*******  consulta a BDCOLBACH ************ **/
         $sql = "SELECT NOMBRE, APLLD_PTRN, APLLD_MTRN, MATRICULA, CURP, CORREO, MODALIDAD, TURNO, CVE_PLANTEL, DESC_ESTATUS, FCH_IMPRSN, TO_CHAR(FCH_SLCTD, 'DD/MM/YYYY'), TO_CHAR(FCH_VLDCN, 'DD/MM/YYYY'), CNSCTV_ORDN, TO_CHAR(FCH_ENTRG, 'DD/MM/YYYY'), EMISOR, RECEPTOR, CT_STTS FROM CRDNCLCB.VW_SOLICITUD_CREDENCIAL WHERE MATRICULA='".$matricula."' ORDER BY FCH_SLCTD DESC";
 
         try{
@@ -74,9 +68,6 @@ class buscarAlumno
     }
     
     public function intervalos($fch, $pltl, $db){
-        /*$conn = new Model\Connect();
-        $db = $conn->connBD();*/
-
         $sqlfaltan = "SELECT COUNT(*) FROM CRDNCLCB.VW_SOLICITUD_CREDENCIAL WHERE CVE_PLANTEL='".$pltl."' AND (DESC_ESTATUS = 'EN PROCESO' OR DESC_ESTATUS = 'IMPRESA') AND FCH_SLCTD=TO_DATE('".$fch."', 'DD/MM/YYYY')";
         $sqltotal = "SELECT COUNT(*) FROM CRDNCLCB.VW_SOLICITUD_CREDENCIAL WHERE CVE_PLANTEL='".$pltl."' AND FCH_SLCTD=TO_DATE('".$fch."', 'DD/MM/YYYY')";
 
@@ -95,9 +86,6 @@ class buscarAlumno
     }
 
     public function update_RepAlum($matricula, $perfil, $db){
-        /*$conn = new Model\Connect();
-        $db = $conn->connBD();*/
-
         if($matricula != ''){
             $sql = "SELECT CT_STTS FROM CRDNCLCB.SOLICITUD_CREDENCIAL WHERE MATRICULA='".$matricula."'";
 
@@ -155,7 +143,6 @@ class buscarAlumno
     }
     
     private function parser_fch($fecha){
-        // Ejemplo: 01/12/2017
         if ($fecha != null){
             $meses = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
 
