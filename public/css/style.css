@@ -676,6 +676,7 @@ select.form-control > option:hover {
     table.table-bordered{margin-left: 30%; height: 150px;}
     [type=file] + label {margin: 0 10% 0 0;}
     #cargar-btn{margin: 4% 9% 0 30%;}
+    /*#foto_std{width: 150px; height: auto;}*/
 }
 /**** si la pantalla es mas pequeña que 1200 pixeles ***/
 @media screen and (max-width: 1255px){
@@ -683,12 +684,10 @@ select.form-control > option:hover {
       margin-left: 1%;
       max-width: 44%;
     }
-
     #div_icon{margin-left: 63%}
     [type=file] + label {margin: 0 25% 0 8%;}
     .sidenav_cont{ top:unset; }
-    .form{
-        margin:10% 30% 10% 32%;}
+    .form{ margin:10% 30% 10% 32%;}
 }
 /**** si la pantalla es mas pequeña que 950 pixeles ***/
 @media screen and (max-width: 950px){
@@ -704,9 +703,7 @@ select.form-control > option:hover {
         padding-top: 10%;
         margin-bottom: 12%;
     }
-    .form{
-        margin: 5% 30% 5% 28%;
-    }
+    .form{ margin: 5% 30% 5% 28%; }
 }
 @media screen and (max-width: 850px){
     #logo_bach{
@@ -751,39 +748,39 @@ select.form-control > option:hover {
     
 }
 
-@media screen and (max-width: 570px){
-    #header {
-        width: 110%;
-        margin: 0;
-        padding: 0;
+@media screen and (max-width: 740px){
+    #div_logosep {
+        height: inherit;
+        width: auto;
+        margin-left: -80%;
     }
-    #div_logobach{ top: -80%; }
-    #logo_bach{ margin-left:60%; width: 48%; }
-    #btn-ingresar{width: 80%;}
-    .lobo{background-size: 100% auto; margin-top: -5% !important; }
-    .form_serch{margin-top: 20% !important;}
-    #serch-form{width: 100%;}
-    table.table-bordered {margin-left: -10%;}
-    table.table-striped {
-        margin-left: 2%;
-        width: 100% !important;
-        margin-top: 4%;
+    #logo_sep{
+        width: auto;
+        height: 90% !important;
+        margin-left: 0;
     }
-    .modal-content { width: 750px !important; }
-    #credencial{ margin-left:15%; }
-    .contact{   
-         width: 80%;
-         margin-right: 10%;
+    #div_logobach {
+      top: -90%;
     }
-    h2.contact { margin: 1% 0 5% 0;} 
-    .sidenav{ margin-left: 0; }
-    #serch-btn{
-      width:80% !important;
-      margin-left: 8% !important;} 
-    
+    #logo_bach {
+        margin-left: 98%;
+        width: 45%;
+    }
+    .form_serch { margin-top: 17% !important; }
 }
 
-@media screen and (max-width: 420px){
+@media screen and (max-width: 670px){
+    #logo_sep { height: 80% !important; }
+    #logo_sicred {
+        width: auto;
+        height: 89%;
+    }
+    #div_titulo {
+        margin-left: -1%;
+    }
+}
+
+  @media screen and (max-width: 420px){
     #header {
         width:inherit;
     }
@@ -798,7 +795,7 @@ select.form-control > option:hover {
         top: 1%;
         margin-left: -5%;
     }
-   #div_logosep{
+    #div_logosep{
         display:block;
         height: 45%;
         width: auto;
@@ -809,12 +806,13 @@ select.form-control > option:hover {
         width: auto;
         margin-top:20%;
         margin-left: -70%;
-        top: 1 !important;
+        top: -10% !important;
     }
     #logo_bach{
-        width:auto;
         height:90%;
+        margin-left: 30% !important;
     }
+    #logo_sep{ margin-left: 30% !important; }
     .sidenav {
         height: 100%;
         width: 100%;
@@ -843,114 +841,7 @@ select.form-control > option:hover {
         background-size: 290px auto;
     }
     .form_serch{
-        margin-top: 20%;
-    }
-    #serch-form{
-        margin-left: 15%;
-        width: 80%;
-    }
-    table.table-striped {
-        margin-top: 3%;
-        margin-left: 1;
-    }
-
-    #checkbox_error{
-        margin-left: 10%;
-    }
-    .modal {
-        display: none;
-        position: fixed;
-        left: 0;
-        top: 0;
-        overflow: auto;
-        background-color: rgb(0,0,0);
-        background-color: rgba(0,0,0,0.4);
-    }
-    .modal-content{
-        width: 200%;
-        margin: auto;
-    }
-    button.close {
-        -webkit-appearance: none;
-        padding: 1% 6%;
-        cursor: pointer;
-        background: 0 0;
-        border: 0;
-    }
-    #modal_credencial{
-        display: block;
-        margin-left: 10%;
-    }
-        
-    div.contact {
-        margin-left: 1%;
-    }
-    h2.contact{
-        margin: 20% 0 2% 1%;
-    }
-    button.contact{
-        width: 90%;
-        margin-right: 5%;
-    }
-    
-}
-
-@media screen and (max-width: 400px){
-    #header {
-        width:inherit;
-    }
-    #logo_sicred {
-        width: auto;
-        height: 90%;
-    }
-    #div_titulo {
-        height: inherit;
-        width: 55%;
-        position: absolute;
-        top: 1%;
-        margin-left: -5%;
-    }
-   #div_logosep{
-        display:none;
-    }
-    #div_logobach{
-        top: 10%;
-        height:100px;
-        margin-left: -80%;
-    }
-    #logo_bach{
-        width:auto;
-        height:90%;
-    }
-    .sidenav {
-        height: 100%;
-        width: 100%;
-        padding-top: 46px;
-        position: relative;
-    }
-    .form {
-        margin: 10% 0 10% -3%;
-        width:inherit;
-    }
-    #btn-ingresar{
-        width: 80%;
-    }
-    .sidenav_cont {
-        height: 100%;
-        width: 100%;
-        position: relative;
-        left: auto;
-        top: 0;
-    }
-    #div_lobo{ /*inicio*/
-        margin-top: -16%;
-        height: 500px;
-    }
-    .lobo {
-        background-size: 290px auto;
-    }
-    .form_serch{
-        margin-top: 20%;
+        margin-top: 0 !important;
     }
     #serch-form{
         margin-left: 15%;
@@ -1019,14 +910,52 @@ select.form-control > option:hover {
         height: 50%;
         width: auto;
         margin-top: 110%;
+        margin-left: 25%;
+        margin-right: -65%;
+        top: -95% !important;
+    }
+    #logo_sep { margin-left: 0 !important; }
+    #logo_bach {
+        height: 90%;
+        margin-left: 0 !important;
     }
     .sidenav {
        margin-left: 10%;
    }
-   .lobo {
-        margin-top: -15% !important;
-   }
-   .form_serch{margin-top: 30% !important;}
+   .lobo { margin-top: -15% !important; }
+   .form_serch{ margin-top: 30% !important;}
+}
+
+@media screen and (max-width: 570px){
+    #header {
+        width: 110%;
+        margin: 0;
+        padding: 0;
+    }
+    #div_logobach{ top: -80%; }
+    #logo_bach{ margin-left:60%; width: 48%; }
+    #btn-ingresar{width: 80%;}
+    .lobo{background-size: 100% auto; margin-top: -5% !important; }
+    .form_serch{margin-top: 20% !important;}
+    #serch-form{width: 100%;}
+    table.table-bordered {margin-left: -10%;}
+    table.table-striped {
+        margin-left: 2%;
+        width: 100% !important;
+        margin-top: 4%;
+    }
+    .modal-content { width: 750px !important; }
+    #credencial{ margin-left:15%; }
+    .contact{   
+         width: 80%;
+         margin-right: 10%;
+    }
+    h2.contact { margin: 1% 0 5% 0;} 
+    .sidenav{ margin-left: 0; }
+    #serch-btn{
+      width:80% !important;
+      margin-left: 8% !important;} 
+    
 }
 
 @media screen and (max-width: 300px){
@@ -1069,8 +998,6 @@ select.form-control > option:hover {
     }
   
 }
-
-
 /*********************************  cargar solicitudes ***********************************************/
 /* ocultamos el input type file */
 [type=file] {
