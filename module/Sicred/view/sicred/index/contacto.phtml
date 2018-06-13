@@ -21,10 +21,12 @@
                     <form name="coment-form" id="coment-form" action="<?= $this->url("sicred", ['action'=>'contacto']); ?>" method="post" style="margin-left: 5%">
                             <div class="row">
                                 <div class="col-sm-6 form-group">
+                                    <span>Nombre: </span>
                                     <input class="form-control" id="nombre" name="nombre" placeholder="NOMBRE" type="text" value="<?=$_SESSION['nombre']." ".$_SESSION['apat']." ".$_SESSION['amat'] ?>" readonly="readonly" style="font-weight: bold">
                                 </div>
                                 <div class="col-sm-6 form-group">
-                                    <input class="form-control" id="email" name="email" placeholder="usuario@bachilleres.edu.mx" type="email" required>
+                                    <span style>Ingrese su correo institucional: </span>
+                                    <input class="form-control" id="email" name="email" placeholder="correoinstitucional@bachilleres.edu.mx" type="email" required>
                                 </div>
                             </div>
                             <input class="form-control" id="asunto" name="asunto" placeholder="ASUNTO" type="text" required><br>
